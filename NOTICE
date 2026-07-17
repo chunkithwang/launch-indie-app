@@ -1,0 +1,30 @@
+launch-indie-ios-app
+Copyright (c) 2026 launch-indie-ios-app contributors
+
+SOURCE ATTRIBUTION
+
+The launch sequence in this project is a paraphrased and operationalized
+adaptation of factual topics and timing described in:
+
+  “The ultimate indie iOS app launch checklist”
+  Paul Hudson, Kickstart, published July 15, 2026
+  https://www.kickstart.tools/blog/the-ultimate-indie-ios-app-launch-checklist
+
+The linked Kickstart launch retrospective is also summarized with attribution:
+
+  “Kickstart: launch retrospective”
+  Paul Hudson, Kickstart
+  https://www.kickstart.tools/blog/kickstart-launch-retrospective
+
+This repository does not include copies of the articles or their images. The
+original articles, images, Kickstart name, and associated materials remain
+with their respective rights holders.
+
+Apple, App Store, App Store Connect, TestFlight, and related names are
+trademarks of Apple Inc. Links to Apple Developer documentation are provided
+for reference. This project is not affiliated with or endorsed by Apple Inc.
+
+This project is not affiliated with or endorsed by Paul Hudson or Kickstart.
+The MIT License applies only to the original code and documentation distributed
+in this repository; it does not grant rights to third-party linked materials,
+names, or trademarks.

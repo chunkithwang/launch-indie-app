@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "title": "Indie iOS app launch task model",
+  "source_url": "https://www.kickstart.tools/blog/the-ultimate-indie-ios-app-launch-checklist",
+  "article_published": "2026-07-15",
+  "verified_on": "2026-07-17",
+  "window": {"start_offset": -45, "end_offset": 60, "calendar_days_inclusive": 106},
+  "tasks": [
+    {
+      "id": "FND-01",
+      "day_offset": -45,
+      "phase": "Foundations",
+      "action": "Write a one-sentence value proposition naming the audience, problem, and advantage over the current alternative.",
+      "rationale": "This sentence anchors screenshots, description, website, pitches, and launch copy.",
+      "done_when": "One specific sentence is approved and avoids vague category language.",
+      "dependencies": []
+    },
+    {
+      "id": "FND-02",
+      "day_offset": -44,
+      "phase": "Foundations",
+      "action": "Identify direct competitors and indirect alternatives, including manual workflows and doing nothing.",
+      "rationale": "Positioning must compete with the user's real alternatives, not only similar apps.",
+      "done_when": "A comparison lists direct apps, indirect substitutes, strengths, weaknesses, price, and positioning.",
+      "dependencies": ["FND-01"]
+    },
+    {
+      "id": "FND-03",
+      "day_offset": -42,
+      "phase": "Foundations",
+      "action": "Choose three core App Store search keywords and inspect the live results on a real device.",
+      "rationale": "Early search research informs positioning and later provides an ASO baseline.",
+      "done_when": "Three terms are documented with search intent, current leaders, and why the app can compete.",
+      "dependencies": ["FND-01", "FND-02"]
+    },
+    {
+      "id": "FND-04",
+      "day_offset": -40,
+      "phase": "Foundations",
+      "action": "Select the business model and an initial price: paid, freemium, or subscription.",
+      "rationale": "A testable pricing hypothesis is more useful than leaving monetization undecided until submission.",
+      "done_when": "The model, price points, trial or free tier, and reasoned hypothesis are recorded.",
+      "dependencies": ["FND-01", "FND-02"]
+    },
+    {
+      "id": "FND-05",
+      "day_offset": -38,
+      "phase": "Foundations",
+      "action": "Create the app record in App Store Connect.",
+      "rationale": "Creating the record secures the intended listing name and unlocks submission setup.",
+      "done_when": "The correct bundle ID, SKU, primary language, and app record are visible in App Store Connect.",
+      "dependencies": ["FND-01"]
+    },
+    {
+      "id": "FND-06",
+      "day_offset": -36,
+      "phase": "Foundations",
+      "action": "Buy the domain and publish a minimal landing page with name, value proposition, screenshot, and email signup.",
+      "rationale": "A simple public destination can collect interest before the store page is available.",
+      "done_when": "The HTTPS page works on mobile, signup is tested, and analytics or signup delivery can be checked.",
+      "dependencies": ["FND-01"]
+    },
+    {
+      "id": "FND-07",
+      "day_offset": -35,
+      "phase": "Foundations",
+      "action": "Start building in public by discussing the user's problem before promoting the app.",
+      "rationale": "Problem-focused posts find the first people who care and generate language for later messaging.",
+      "done_when": "The first useful problem-focused post is published and responses are captured.",
+      "dependencies": ["FND-01", "FND-06"]
+    },
+    {
+      "id": "STB-01",
+      "day_offset": -30,
+      "phase": "Store presence and beta",
+      "action": "Draft App Store metadata as one system: name, subtitle, and keyword field without wasteful repetition.",
+      "rationale": "The visible name and subtitle sell while the hidden keywords support discovery.",
+      "done_when": "Metadata meets current Apple limits, reflects positioning, and avoids prohibited or duplicate terms.",
+      "dependencies": ["FND-01", "FND-03", "FND-05"]
+    },
+    {
+      "id": "STB-02",
+      "day_offset": -28,
+      "phase": "Store presence and beta",
+      "action": "Create required App Store screenshots, prioritizing the first three frames and every supported device family.",
+      "rationale": "Screenshots are both a submission requirement and a primary conversion surface.",
+      "done_when": "Current required sizes upload successfully and the first three frames communicate outcomes clearly.",
+      "dependencies": ["FND-01", "STB-01"]
+    },
+    {
+      "id": "STB-03",
+      "day_offset": -26,
+      "phase": "Store presence and beta",
+      "action": "Write the App Store description as sales copy: outcome first, features second.",
+      "rationale": "Outcome-led copy tells prospective users why the app matters before listing implementation details.",
+      "done_when": "The description is specific, scannable, accurate, localized as needed, and within Apple's current limit.",
+      "dependencies": ["FND-01", "STB-01"]
+    },
+    {
+      "id": "STB-04",
+      "day_offset": -25,
+      "phase": "Store presence and beta",
+      "action": "Submit an App Store featuring nomination for the launch.",
+      "rationale": "Apple asks developers to share noteworthy launches in advance and recommends at least three weeks of lead time.",
+      "done_when": "A submitted nomination includes the launch date, differentiated story, relevant markets, and supporting links.",
+      "dependencies": ["FND-01", "FND-05", "STB-02", "STB-03"]
+    },
+    {
+      "id": "STB-05",
+      "day_offset": -25,
+      "phase": "Store presence and beta",
+      "action": "Complete App Store Connect blockers: app privacy, age rating, support URL, review contact, notes, and demo access when needed.",
+      "rationale": "Missing compliance or reviewer information causes preventable submission delays.",
+      "done_when": "Every required field is complete, URLs work, reviewer steps are reproducible, and demo credentials do not expire.",
+      "dependencies": ["FND-05", "FND-06"]
+    },
+    {
+      "id": "STB-06",
+      "day_offset": -24,
+      "phase": "Store presence and beta",
+      "action": "Start external TestFlight beta testing and provide focused What to Test guidance.",
+      "rationale": "The first external build requires review and testers need time to reveal real defects.",
+      "done_when": "The first external group can install an approved build and feedback has a defined collection path.",
+      "dependencies": ["FND-05", "STB-05"]
+    },
+    {
+      "id": "STB-07",
+      "day_offset": -23,
+      "phase": "Store presence and beta",
+      "action": "Submit an approvable build for App Review, configure manual release, and prepare or publish the pre-order when eligible.",
+      "rationale": "Early review creates margin and an approved pre-order converts prelaunch interest into release-day installs.",
+      "done_when": "The intended build is submitted, release settings are verified, and the pre-order page is live or its blocker is documented.",
+      "dependencies": ["STB-01", "STB-02", "STB-03", "STB-05", "STB-06"]
+    },
+    {
+      "id": "STB-08",
+      "day_offset": -21,
+      "phase": "Store presence and beta",
+      "action": "Share the pre-order link across the website, email list, profiles, and relevant build-in-public posts.",
+      "rationale": "A direct pre-order action turns diffuse interest into an automatic launch-day download.",
+      "done_when": "Every owned channel uses the correct tracked URL and the page resolves in target storefronts.",
+      "dependencies": ["STB-07"]
+    },
+    {
+      "id": "STB-09",
+      "day_offset": -21,
+      "phase": "Store presence and beta",
+      "action": "Collect at least three permissioned pieces of social proof from beta use or early feedback.",
+      "rationale": "Credible evidence supports launch posts, press materials, and product-page messaging.",
+      "done_when": "Three attributable, permissioned quotes, usage examples, or screenshots are stored with context.",
+      "dependencies": ["STB-06"]
+    },
+    {
+      "id": "STB-10",
+      "day_offset": -20,
+      "phase": "Store presence and beta",
+      "action": "Assemble a press kit with fact sheet, full-resolution screenshots, app icon, contact details, links, and concise story angles.",
+      "rationale": "A complete, easy-to-download package reduces work for journalists and creators.",
+      "done_when": "One public link exposes current assets and facts without requiring access permission.",
+      "dependencies": ["FND-01", "FND-06", "STB-02", "STB-09"]
+    },
+    {
+      "id": "LWP-01",
+      "day_offset": -14,
+      "phase": "Launch week prep",
+      "action": "Pitch selected journalists and creators with a short personal note, access, press kit, and clear release date.",
+      "rationale": "Two weeks gives recipients time to evaluate and publish without making the launch easy to forget.",
+      "done_when": "A focused contact list is pitched, follow-ups are scheduled, and responses are tracked.",
+      "dependencies": ["STB-06", "STB-10"]
+    },
+    {
+      "id": "LWP-02",
+      "day_offset": -12,
+      "phase": "Launch week prep",
+      "action": "Enable App Store Connect notifications for review and status changes.",
+      "rationale": "Fast awareness prevents a rejection, metadata question, or rating from sitting unnoticed.",
+      "done_when": "The correct team members receive and test the relevant notification channels.",
+      "dependencies": ["FND-05"]
+    },
+    {
+      "id": "LWP-03",
+      "day_offset": -9,
+      "phase": "Launch week prep",
+      "action": "Write every launch-day publication and reusable reply in advance.",
+      "rationale": "Prepared copy protects quality when launch-day attention is fragmented.",
+      "done_when": "Website copy, email, social posts, launch article, FAQs, and expected replies are approved and scheduled or staged.",
+      "dependencies": ["FND-01", "STB-09", "STB-10"]
+    },
+    {
+      "id": "LWP-04",
+      "day_offset": -7,
+      "phase": "Launch week prep",
+      "action": "Submit the final reviewed release candidate or another corrected version with a full week of margin.",
+      "rationale": "A seven-day buffer absorbs a slow review or a correctable rejection.",
+      "done_when": "The intended release candidate is submitted, smoke-tested, and its review status is monitored.",
+      "dependencies": ["STB-06", "STB-07"]
+    },
+    {
+      "id": "LWP-05",
+      "day_offset": -5,
+      "phase": "Launch week prep",
+      "action": "Prepare the Product Hunt page when the app and audience fit that channel.",
+      "rationale": "Gallery assets, maker story, and first comment are too important to improvise on launch day.",
+      "done_when": "The page, gallery, first comment, maker story, links, and response owner are ready, or the channel is marked not applicable.",
+      "dependencies": ["STB-02", "STB-09", "LWP-03"],
+      "applies_when": "Product Hunt is a relevant acquisition channel."
+    },
+    {
+      "id": "LWP-06",
+      "day_offset": -1,
+      "phase": "Launch week prep",
+      "action": "Freeze noncritical changes and rest before launch.",
+      "rationale": "Last-minute feature work creates avoidable risk before a customer-service-heavy day.",
+      "done_when": "Only release blockers may change, the approved build is identified, and launch owners know the next day's runbook.",
+      "dependencies": ["LWP-03", "LWP-04"]
+    },
+    {
+      "id": "DAY-01",
+      "day_offset": 0,
+      "phase": "Launch day",
+      "action": "Release the approved app or verify that the pre-order transitions to available.",
+      "rationale": "Release execution should use the already-approved build and settings.",
+      "done_when": "The intended version is downloadable in target storefronts and a purchase or download smoke test passes.",
+      "dependencies": ["LWP-04", "LWP-06"]
+    },
+    {
+      "id": "DAY-02",
+      "day_offset": 0,
+      "phase": "Launch day",
+      "action": "Replace the website signup or pre-order CTA with the live App Store download CTA.",
+      "rationale": "Owned traffic must point to the actual download action as soon as the app is available.",
+      "done_when": "The production website uses the live store link and tracking works.",
+      "dependencies": ["DAY-01", "FND-06"]
+    },
+    {
+      "id": "DAY-03",
+      "day_offset": 0,
+      "phase": "Launch day",
+      "action": "Publish the prepared launch post and email the list.",
+      "rationale": "Prepared owned-channel messages create the first coordinated wave of awareness.",
+      "done_when": "All selected owned channels are live with correct links and no stale pre-order language.",
+      "dependencies": ["DAY-01", "LWP-03"]
+    },
+    {
+      "id": "DAY-04",
+      "day_offset": 0,
+      "phase": "Launch day",
+      "action": "Launch on Product Hunt early in the US day when that channel is part of the plan.",
+      "rationale": "A prepared launch page benefits from a full day of audience activity and responses.",
+      "done_when": "The page is live, links work, and a maker is available to respond, or the channel is marked not applicable.",
+      "dependencies": ["DAY-01", "LWP-05"],
+      "applies_when": "Product Hunt is a relevant acquisition channel."
+    },
+    {
+      "id": "DAY-05",
+      "day_offset": 0,
+      "phase": "Launch day",
+      "action": "Spend the rest of launch day replying to comments, questions, mentions, and support requests.",
+      "rationale": "Responsive conversation is the day's primary marketing and support work.",
+      "done_when": "Incoming conversations are acknowledged, bugs are logged, and urgent issues have owners.",
+      "dependencies": ["DAY-01", "DAY-03"]
+    },
+    {
+      "id": "FBF-01",
+      "day_offset": 1,
+      "phase": "Feedback fortnight",
+      "action": "Centralize every feedback source in one log.",
+      "rationale": "Patterns become visible only when reviews, mail, social replies, crashes, and beta notes are combined.",
+      "done_when": "Each item has source, date, severity, theme, owner, status, and a link to evidence.",
+      "dependencies": ["DAY-05"]
+    },
+    {
+      "id": "FBF-02",
+      "day_offset": 2,
+      "phase": "Feedback fortnight",
+      "action": "Submit the app to relevant app directories.",
+      "rationale": "Directory discovery can create a useful long tail beyond the launch-day spike.",
+      "done_when": "A qualified list is submitted with tracked links and each submission status is recorded.",
+      "dependencies": ["DAY-01", "STB-10"]
+    },
+    {
+      "id": "FBF-03",
+      "day_offset": 3,
+      "phase": "Feedback fortnight",
+      "action": "Fix the highest-severity post-launch defect and request expedited review only for a genuine critical case.",
+      "rationale": "Fast, focused repair protects early trust; expedited review is an exceptional path, not normal scheduling.",
+      "done_when": "The defect is reproduced, fixed, tested, release-noted, and submitted through the appropriate review path.",
+      "dependencies": ["FBF-01"]
+    },
+    {
+      "id": "FBF-04",
+      "day_offset": 4,
+      "phase": "Feedback fortnight",
+      "action": "Reply respectfully and specifically to App Store reviews, including critical reviews.",
+      "rationale": "Future customers read developer responses as evidence of support quality.",
+      "done_when": "New reviews have a response or an explicit priority reason, and no reply exposes private information.",
+      "dependencies": ["FBF-01"]
+    },
+    {
+      "id": "FBF-05",
+      "day_offset": 7,
+      "phase": "Feedback fortnight",
+      "action": "Ship version 1.0.1 only when a tested fix or useful improvement earns the update.",
+      "rationale": "A meaningful first-week update shows that the app is maintained and feedback matters.",
+      "done_when": "The update passes regression testing, App Review, release monitoring, and communicates concrete changes.",
+      "dependencies": ["FBF-01", "FBF-03"]
+    },
+    {
+      "id": "FBF-06",
+      "day_offset": 10,
+      "phase": "Feedback fortnight",
+      "action": "Enable the system review prompt at a natural moment of user success after the first update settles.",
+      "rationale": "Satisfied, experienced users can provide more meaningful ratings than users interrupted at first launch.",
+      "done_when": "The prompt uses Apple's API, avoids onboarding and interruption, and has version and engagement safeguards.",
+      "dependencies": ["FBF-05"]
+    },
+    {
+      "id": "FBF-07",
+      "day_offset": 14,
+      "phase": "Feedback fortnight",
+      "action": "Record ranking baselines for the three core keywords.",
+      "rationale": "A dated baseline makes later ASO changes measurable.",
+      "done_when": "Rank, storefront, device platform, search-result competitors, and measurement date are stored for each term.",
+      "dependencies": ["FND-03", "DAY-01"]
+    },
+    {
+      "id": "LTL-01",
+      "day_offset": 15,
+      "phase": "Long tail",
+      "action": "Plan the next meaningful update and treat it as a smaller relaunch.",
+      "rationale": "A two-to-four-week update cadence creates repeated opportunities for visibility and retention.",
+      "done_when": "The next release has a focused scope, owner, target date, test plan, and communication plan.",
+      "dependencies": ["FBF-01", "FBF-05"]
+    },
+    {
+      "id": "LTL-02",
+      "day_offset": 21,
+      "phase": "Long tail",
+      "action": "Revisit the product page using real keyword, conversion, review, and retention data.",
+      "rationale": "ASO decisions become better grounded after the app has actual traffic and outcomes.",
+      "done_when": "Proposed metadata or creative changes cite measured evidence and define the next comparison window.",
+      "dependencies": ["FBF-07"]
+    },
+    {
+      "id": "LTL-03",
+      "day_offset": 31,
+      "phase": "Long tail",
+      "action": "Decide whether Apple Ads is economically viable before spending.",
+      "rationale": "Product-page conversion, paywall conversion, net lifetime value, and allowable acquisition cost determine whether paid growth can work.",
+      "done_when": "The funnel math and maximum acquisition cost are documented; a small test has guardrails or ads are deferred while the funnel is fixed.",
+      "dependencies": ["FND-04", "LTL-02"],
+      "applies_when": "Paid acquisition is under consideration."
+    },
+    {
+      "id": "LTL-04",
+      "day_offset": 45,
+      "phase": "Long tail",
+      "action": "Publish a build-in-public launch retrospective with real numbers and mistakes.",
+      "rationale": "Transparent lessons can create another wave of useful attention and force honest learning.",
+      "done_when": "The retrospective includes outcomes, misses, decisions, user feedback, and specific changes for the next launch.",
+      "dependencies": ["FBF-01", "LTL-01", "LTL-02"]
+    },
+    {
+      "id": "LTL-05",
+      "day_offset": 60,
+      "phase": "Long tail",
+      "action": "Review Apple Ads results and keyword ranks, stop ineffective work, and roll lessons into the next update.",
+      "rationale": "The final launch task converts campaign learning into the routine operation of the app.",
+      "done_when": "Keep, change, and stop decisions are backed by data and assigned to the next release plan.",
+      "dependencies": ["FBF-07", "LTL-01", "LTL-02", "LTL-03"]
+    }
+  ]
+}
