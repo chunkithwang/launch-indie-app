@@ -1,0 +1,4 @@
+interface:
+  display_name: "Indie Apple App Launch"
+  short_description: "Plan and audit complete iOS and macOS launches"
+  default_prompt: "Use $launch-indie-app to build a dated launch plan for my indie iOS or macOS app."

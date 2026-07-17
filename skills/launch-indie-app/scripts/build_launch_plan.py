@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a dated indie iOS launch plan from the bundled 40-task model."""
+"""Build a dated indie iOS or macOS launch plan from the bundled 40-task model."""
 
 from __future__ import annotations
 
@@ -16,9 +16,13 @@ from typing import Any
 
 SKILL_DIR = Path(__file__).resolve().parent.parent
 TASKS_PATH = SKILL_DIR / "references" / "launch-tasks.json"
+MACOS_OVERRIDES_PATH = SKILL_DIR / "references" / "macos-task-overrides.json"
 EXPECTED_TASK_COUNT = 40
 EXPECTED_START_OFFSET = -45
 EXPECTED_END_OFFSET = 60
+PLATFORM_LABELS = {"ios": "iOS", "macos": "macOS"}
+MACOS_DISTRIBUTIONS = ("app-store", "direct", "both")
+OVERRIDE_FIELDS = {"action", "rationale", "done_when", "applies_when"}
 EXPECTED_PHASE_COUNTS = {
     "Foundations": 7,
     "Store presence and beta": 10,
@@ -33,13 +37,22 @@ def parse_date(value: str) -> date:
     try:
         return datetime.strptime(value, "%Y-%m-%d").date()
     except ValueError as exc:
-        raise argparse.ArgumentTypeError(f"invalid date '{value}'; expected YYYY-MM-DD") from exc
+        raise argparse.ArgumentTypeError(
+            f"invalid date '{value}'; expected YYYY-MM-DD"
+        ) from exc
 
 
-def load_model() -> dict[str, Any]:
+def load_model(
+    platform: str = "ios", distribution: str = "app-store"
+) -> dict[str, Any]:
     with TASKS_PATH.open(encoding="utf-8") as handle:
         model = json.load(handle)
     validate_model(model)
+    if platform == "macos":
+        with MACOS_OVERRIDES_PATH.open(encoding="utf-8") as handle:
+            overrides = json.load(handle)
+        validate_macos_overrides(overrides, model)
+        model = apply_macos_overrides(model, overrides, distribution)
     return model
 
 
@@ -67,7 +80,15 @@ def validate_model(model: dict[str, Any]) -> None:
             f"phase task counts differ from the source article: {dict(phase_counts)}"
         )
 
-    required = {"id", "day_offset", "phase", "action", "rationale", "done_when", "dependencies"}
+    required = {
+        "id",
+        "day_offset",
+        "phase",
+        "action",
+        "rationale",
+        "done_when",
+        "dependencies",
+    }
     id_to_offset = {task["id"]: task["day_offset"] for task in tasks}
     for task in tasks:
         missing = sorted(required - task.keys())
@@ -89,6 +110,82 @@ def validate_model(model: dict[str, Any]) -> None:
             )
 
 
+def validate_macos_overrides(overrides: dict[str, Any], model: dict[str, Any]) -> None:
+    if overrides.get("platform") != "macos":
+        raise ValueError("macos-task-overrides.json must target the macos platform")
+    if tuple(overrides.get("distribution_modes", ())) != MACOS_DISTRIBUTIONS:
+        raise ValueError("macOS distribution modes must be app-store, direct, and both")
+
+    task_overrides = overrides.get("overrides")
+    if not isinstance(task_overrides, dict) or not task_overrides:
+        raise ValueError("macos-task-overrides.json must contain a non-empty overrides object")
+
+    base_ids = {task["id"] for task in model["tasks"]}
+    unknown_ids = sorted(set(task_overrides) - base_ids)
+    if unknown_ids:
+        raise ValueError(f"macOS overrides reference unknown tasks: {', '.join(unknown_ids)}")
+
+    for task_id, override in task_overrides.items():
+        if not isinstance(override, dict):
+            raise ValueError(f"macOS override {task_id} must be an object")
+        unknown_fields = sorted(
+            set(override) - OVERRIDE_FIELDS - {"distribution_guidance"}
+        )
+        if unknown_fields:
+            raise ValueError(
+                f"macOS override {task_id} has unknown fields: {', '.join(unknown_fields)}"
+            )
+        for field in OVERRIDE_FIELDS & set(override):
+            if not isinstance(override[field], str) or not override[field].strip():
+                raise ValueError(f"macOS override {task_id}.{field} must be a non-empty string")
+
+        guidance = override.get("distribution_guidance", {})
+        if not isinstance(guidance, dict):
+            raise ValueError(f"macOS override {task_id}.distribution_guidance must be an object")
+        unknown_modes = sorted(set(guidance) - {"app-store", "direct"})
+        if unknown_modes:
+            raise ValueError(
+                f"macOS override {task_id} has unknown distribution guidance: "
+                f"{', '.join(unknown_modes)}"
+            )
+        for mode, text in guidance.items():
+            if not isinstance(text, str) or not text.strip():
+                raise ValueError(
+                    f"macOS override {task_id}.distribution_guidance.{mode} "
+                    "must be a non-empty string"
+                )
+
+
+def apply_macos_overrides(
+    model: dict[str, Any], overrides: dict[str, Any], distribution: str
+) -> dict[str, Any]:
+    if distribution not in MACOS_DISTRIBUTIONS:
+        raise ValueError(f"unsupported macOS distribution mode: {distribution}")
+
+    task_overrides = overrides["overrides"]
+    resolved_tasks: list[dict[str, Any]] = []
+    for task in model["tasks"]:
+        resolved = dict(task)
+        override = task_overrides.get(task["id"], {})
+        for field in OVERRIDE_FIELDS:
+            if field in override:
+                resolved[field] = override[field]
+
+        guidance = override.get("distribution_guidance", {})
+        selected_modes = (
+            ("app-store", "direct") if distribution == "both" else (distribution,)
+        )
+        selected_guidance = [guidance[mode] for mode in selected_modes if mode in guidance]
+        if selected_guidance:
+            resolved["distribution_guidance"] = " ".join(selected_guidance)
+        resolved_tasks.append(resolved)
+
+    resolved_model = dict(model)
+    resolved_model["title"] = overrides["title"]
+    resolved_model["tasks"] = resolved_tasks
+    return resolved_model
+
+
 def day_label(offset: int) -> str:
     if offset == 0:
         return "D0"
@@ -103,7 +200,13 @@ def date_status(task_date: date, today: date) -> str:
     return "upcoming"
 
 
-def schedule(model: dict[str, Any], ship_date: date, today: date) -> list[dict[str, Any]]:
+def schedule(
+    model: dict[str, Any],
+    ship_date: date,
+    today: date,
+    platform: str,
+    distribution: str,
+) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for task in model["tasks"]:
         scheduled_date = ship_date + timedelta(days=task["day_offset"])
@@ -111,6 +214,8 @@ def schedule(model: dict[str, Any], ship_date: date, today: date) -> list[dict[s
         row["day"] = day_label(task["day_offset"])
         row["scheduled_date"] = scheduled_date.isoformat()
         row["calendar_status"] = date_status(scheduled_date, today)
+        row["platform"] = platform
+        row["distribution"] = distribution
         rows.append(row)
     return rows
 
@@ -119,10 +224,19 @@ def escape_cell(value: str) -> str:
     return value.replace("|", "\\|").replace("\n", " ")
 
 
-def render_markdown(rows: list[dict[str, Any]], ship_date: date, today: date) -> str:
+def render_markdown(
+    rows: list[dict[str, Any]],
+    ship_date: date,
+    today: date,
+    platform: str,
+    distribution: str,
+) -> str:
+    platform_label = PLATFORM_LABELS[platform]
     lines = [
-        "# Indie iOS App Launch Plan",
+        f"# Indie {platform_label} App Launch Plan",
         "",
+        f"- Platform: {platform_label}",
+        f"- Distribution: {distribution}",
         f"- Ship date: {ship_date.isoformat()}",
         f"- Status date: {today.isoformat()}",
         f"- Canonical window: {(ship_date + timedelta(days=EXPECTED_START_OFFSET)).isoformat()} to "
@@ -154,6 +268,12 @@ def render_markdown(rows: list[dict[str, Any]], ship_date: date, today: date) ->
             lines.append(
                 f"|  |  |  | Conditional | Applies when: {escape_cell(row['applies_when'])} |  |"
             )
+        if row.get("distribution_guidance"):
+            lines.append(
+                "|  |  |  | Distribution | {guidance} |  |".format(
+                    guidance=escape_cell(row["distribution_guidance"])
+                )
+            )
 
     lines.extend(
         [
@@ -167,8 +287,16 @@ def render_markdown(rows: list[dict[str, Any]], ship_date: date, today: date) ->
     return "\n".join(lines) + "\n"
 
 
-def render_json(rows: list[dict[str, Any]], ship_date: date, today: date) -> str:
+def render_json(
+    rows: list[dict[str, Any]],
+    ship_date: date,
+    today: date,
+    platform: str,
+    distribution: str,
+) -> str:
     payload = {
+        "platform": platform,
+        "distribution": distribution,
         "ship_date": ship_date.isoformat(),
         "status_date": today.isoformat(),
         "canonical_task_count": len(rows),
@@ -186,11 +314,14 @@ def render_csv(rows: list[dict[str, Any]]) -> str:
         "day_offset",
         "scheduled_date",
         "calendar_status",
+        "platform",
+        "distribution",
         "action",
         "rationale",
         "done_when",
         "dependencies",
         "applies_when",
+        "distribution_guidance",
     ]
     writer = csv.DictWriter(output, fieldnames=fields, extrasaction="ignore")
     writer.writeheader()
@@ -198,20 +329,39 @@ def render_csv(rows: list[dict[str, Any]]) -> str:
         serializable = dict(row)
         serializable["dependencies"] = ",".join(row["dependencies"])
         serializable.setdefault("applies_when", "")
+        serializable.setdefault("distribution_guidance", "")
         writer.writerow(serializable)
     return output.getvalue()
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--ship-date", required=True, type=parse_date, help="Release date in YYYY-MM-DD")
+    parser.add_argument(
+        "--ship-date",
+        required=True,
+        type=parse_date,
+        help="Release date in YYYY-MM-DD",
+    )
+    parser.add_argument(
+        "--platform",
+        choices=tuple(PLATFORM_LABELS),
+        default="ios",
+        help="Target Apple platform; defaults to ios",
+    )
+    parser.add_argument(
+        "--distribution",
+        choices=MACOS_DISTRIBUTIONS,
+        help="macOS distribution mode; defaults to both for macOS",
+    )
     parser.add_argument(
         "--today",
         type=parse_date,
         default=date.today(),
         help="Status date in YYYY-MM-DD; defaults to the local current date",
     )
-    parser.add_argument("--format", choices=("markdown", "csv", "json"), default="markdown")
+    parser.add_argument(
+        "--format", choices=("markdown", "csv", "json"), default="markdown"
+    )
     parser.add_argument("--output", type=Path, help="Write output to this file instead of stdout")
     parser.add_argument(
         "--validate-only",
@@ -222,9 +372,15 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> int:
-    args = build_parser().parse_args()
+    parser = build_parser()
+    args = parser.parse_args()
+    if args.platform == "ios" and args.distribution is not None:
+        parser.error("--distribution is only valid with --platform macos")
+    distribution = args.distribution or (
+        "both" if args.platform == "macos" else "app-store"
+    )
     try:
-        model = load_model()
+        model = load_model(args.platform, distribution)
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
@@ -232,17 +388,22 @@ def main() -> int:
     if args.validate_only:
         print(
             f"OK: {len(model['tasks'])} tasks span "
-            f"D{EXPECTED_START_OFFSET} through D+{EXPECTED_END_OFFSET}."
+            f"D{EXPECTED_START_OFFSET} through D+{EXPECTED_END_OFFSET} for "
+            f"{PLATFORM_LABELS[args.platform]} ({distribution})."
         )
         return 0
 
-    rows = schedule(model, args.ship_date, args.today)
+    rows = schedule(model, args.ship_date, args.today, args.platform, distribution)
     if args.format == "json":
-        content = render_json(rows, args.ship_date, args.today)
+        content = render_json(
+            rows, args.ship_date, args.today, args.platform, distribution
+        )
     elif args.format == "csv":
         content = render_csv(rows)
     else:
-        content = render_markdown(rows, args.ship_date, args.today)
+        content = render_markdown(
+            rows, args.ship_date, args.today, args.platform, distribution
+        )
 
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

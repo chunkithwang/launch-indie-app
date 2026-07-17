@@ -1,4 +1,0 @@
-interface:
-  display_name: "Indie iOS App Launch"
-  short_description: "Plan and audit a complete 106-day iOS launch"
-  default_prompt: "Use $launch-indie-ios-app to build a dated launch plan for my indie iOS app."

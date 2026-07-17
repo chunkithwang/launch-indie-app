@@ -8,6 +8,7 @@ Verified against Apple Developer documentation on 2026-07-17. These facts can ch
 - Screenshots
 - Featuring nominations
 - TestFlight
+- macOS distribution
 - Pre-orders and release settings
 - App Review and expedited review
 - Ratings and review prompts
@@ -32,6 +33,7 @@ Sources:
 - For a 6.9-inch iPhone display, accepted portrait sizes currently include 1260×2736, 1290×2796, and 1320×2868 pixels, with landscape orientations reversed. The source article uses 1320×2868 as its recommended master size.
 - If the app runs on iPad, 13-inch iPad screenshots are required. Accepted portrait sizes currently include 2064×2752 and 2048×2732 pixels, with landscape orientations reversed.
 - Apple can scale accepted large-display screenshots for several smaller display classes, but verify the current table for the exact device coverage before uploading.
+- Mac apps require 1–10 screenshots in one accepted 16:10 size: 1280×800, 1440×900, 2560×1600, or 2880×1800 pixels.
 - Prioritize the first three screenshots for the main value story even though up to ten are accepted.
 
 Source: <https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications>
@@ -54,8 +56,24 @@ Sources:
 - Apple currently allows up to 100 internal App Store Connect testers and up to 10,000 external testers.
 - Adding the first build of the app to an external group sends it to TestFlight App Review. The first build requires review; later builds may not require a full review.
 - Capture sessions, crashes, screenshots, and written tester feedback, then resolve meaningful issues before App Store submission.
+- TestFlight supports macOS. TestFlight for Mac requires a macOS app built with Xcode 13 or later.
 
 Source: <https://developer.apple.com/help/app-store-connect/test-a-beta-version/testflight-overview/>
+
+## macOS distribution
+
+- A Mac App Store app must enable App Sandbox, use appropriate entitlements, follow the additional macOS requirements in App Review Guideline 2.4.5, and distribute updates only through the Mac App Store.
+- Software distributed outside the Mac App Store should be signed with the appropriate Developer ID certificate so Gatekeeper can identify the developer.
+- Directly distributed software built after June 1, 2019 and signed with Developer ID must be notarized. Use Xcode or `notarytool`, inspect the result, and staple the ticket to the final artifact.
+- Notarization is an automated security and code-signing check, not App Review. Mac App Store submissions do not use this separate notarization path.
+- Read `macos-distribution.md` for channel selection, packaging, architecture, commerce, update, test-matrix, and launch-gate guidance.
+
+Sources:
+
+- <https://developer.apple.com/documentation/xcode/configuring-the-macos-app-sandbox/>
+- <https://developer.apple.com/app-store/review/guidelines/#hardware-compatibility>
+- <https://developer.apple.com/developer-id/>
+- <https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution>
 
 ## Pre-orders and release settings
 

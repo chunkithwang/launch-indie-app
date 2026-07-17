@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "platform": "macos",
+  "title": "Indie macOS app launch task overrides",
+  "distribution_modes": ["app-store", "direct", "both"],
+  "overrides": {
+    "FND-02": {
+      "action": "Identify competing Mac apps and indirect alternatives, including browser tools, command-line workflows, manual processes, and doing nothing.",
+      "done_when": "A comparison covers Mac App Store and direct-download competitors, supported macOS versions, architecture support, price, strengths, weaknesses, and positioning."
+    },
+    "FND-03": {
+      "action": "Choose three core discovery terms and inspect the live Mac App Store and web results on a Mac.",
+      "rationale": "Early discovery research informs positioning and creates a baseline across the channels where Mac customers actually search.",
+      "done_when": "Three terms are documented with search intent, current Mac competitors, relevant discovery channels, and why the app can compete."
+    },
+    "FND-04": {
+      "action": "Select the macOS business model, distribution channels, and initial price.",
+      "rationale": "Distribution changes commerce, licensing, support, and update obligations, so decide the channel and pricing hypothesis together.",
+      "done_when": "The Mac App Store, direct, or dual-channel decision is recorded with price points, trial or free tier, licensing approach, taxes and refunds owner, and a reasoned hypothesis.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: confirm the Paid Apps Agreement when charging, App Store price points, and StoreKit rules for in-app purchases or subscriptions.",
+        "direct": "Direct: choose a payment processor, license or account recovery flow, refund policy, tax handling, and what happens when the licensing service is unavailable."
+      }
+    },
+    "FND-05": {
+      "action": "Create the distribution records and signing ownership needed for the selected macOS channels.",
+      "rationale": "Early channel setup exposes identity, contract, certificate, and access blockers before they threaten the release date.",
+      "done_when": "Bundle identifiers, signing team, certificate owner and backup, versioning scheme, distribution channels, and release owner are documented and accessible.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: create the macOS app record in App Store Connect with the correct bundle ID, SKU, primary language, category, and availability.",
+        "direct": "Direct: create Developer ID Application and, when needed, Developer ID Installer certificates; document who can sign, notarize, and rotate them."
+      }
+    },
+    "FND-06": {
+      "action": "Publish a minimal Mac-focused landing page with the value proposition, real product screenshot, system requirements, email signup, and the selected acquisition action.",
+      "rationale": "A public destination can collect interest, explain compatibility, and route customers to the correct channel before release.",
+      "done_when": "The HTTPS page works on desktop and mobile, states minimum macOS and hardware support, and its signup, pre-order, purchase, or download action is tested."
+    },
+    "STB-01": {
+      "action": "Draft the macOS listing and product-page metadata as one system: name, subtitle or tagline, keywords, category, compatibility, and release notes.",
+      "rationale": "Consistent channel copy must sell the product while setting accurate expectations about compatibility, pricing, permissions, and delivery.",
+      "done_when": "Copy reflects Mac workflows, accurately states system and architecture support, meets the selected channels' limits, and avoids duplicate or prohibited terms.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: complete the localized name, subtitle, keyword field, category, copyright, and platform version information in App Store Connect.",
+        "direct": "Direct: prepare the website title and description, download filename, version notes, system requirements, license terms, and signed artifact metadata."
+      }
+    },
+    "STB-02": {
+      "action": "Create macOS screenshots that show real desktop workflows, window chrome, menus, and meaningful app states without exposing private data.",
+      "rationale": "Desktop screenshots are a primary conversion surface and must prove that the app fits real Mac workflows at a readable scale.",
+      "done_when": "A coherent screenshot set covers the primary workflows, remains legible at listing size, and matches every selected channel's required dimensions.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: upload 1-10 screenshots in an accepted 16:10 size: 1280x800, 1440x900, 2560x1600, or 2880x1800 pixels.",
+        "direct": "Direct: publish optimized 16:10 product images and, when useful, a short demo that shows installation and the first successful workflow."
+      }
+    },
+    "STB-03": {
+      "action": "Write macOS sales copy that leads with the desktop outcome, then explains workflows, integrations, compatibility, privacy, and the purchase model.",
+      "done_when": "The copy is specific, scannable, accurate about permissions and limitations, localized as needed, and consistent across selected channels."
+    },
+    "STB-04": {
+      "action": "Prepare channel-specific editorial and discovery outreach with the launch story, differentiated Mac experience, timing, and supporting assets.",
+      "rationale": "Store editors, reviewers, directories, and newsletters need lead time and channel-appropriate evidence to evaluate a Mac app.",
+      "done_when": "The relevant nomination or outreach is submitted with the release date, supported markets, product story, screenshots, and working links.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: submit a Featuring Nomination in App Store Connect at least three weeks before launch when editorial consideration is relevant.",
+        "direct": "Direct: pitch appropriate Mac app directories, newsletters, reviewers, and communities; App Store featuring is not applicable to this channel."
+      }
+    },
+    "STB-05": {
+      "action": "Complete macOS compliance, entitlement, signing, packaging, and reviewer or installer blockers for every selected channel.",
+      "rationale": "Sandbox, entitlement, signature, notarization, privacy, and reviewer failures can all block installation or release even when the app works in development.",
+      "done_when": "Privacy disclosures and purpose strings match behavior, required entitlements are minimal, nested code is signed correctly, clean-machine installation succeeds, and each channel's review or trust checks pass.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: enable App Sandbox, request only required entitlements, complete app privacy, age rating, export compliance, support URL, review notes, and non-expiring demo access.",
+        "direct": "Direct: enable Hardened Runtime, sign the app and all nested executables with Developer ID, use a secure timestamp, remove get-task-allow, and prepare the final ZIP, DMG, or PKG for notarization."
+      }
+    },
+    "STB-06": {
+      "action": "Start external macOS beta testing with focused coverage for minimum and current macOS versions, Apple silicon and Intel when supported, permissions, upgrades, keyboard use, windows, menus, and sleep or wake.",
+      "rationale": "A real Mac beta matrix reveals architecture, permission, lifecycle, installation, and update failures that a developer machine can hide.",
+      "done_when": "External testers can install an authentic build on the supported matrix, complete the core workflow, submit feedback, and receive a beta update.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: distribute the beta with TestFlight for Mac and provide precise What to Test guidance.",
+        "direct": "Direct: distribute a Developer ID-signed and notarized beta through a private download or beta update channel; do not train testers to bypass Gatekeeper."
+      }
+    },
+    "STB-07": {
+      "action": "Prepare an approvable or notarized macOS release candidate and stage the selected release channels without making the app public.",
+      "rationale": "Validating each channel early creates margin for App Review questions, signing defects, notarization failures, and broken install or update paths.",
+      "done_when": "Every selected channel has an installable release candidate, verified release controls, reproducible install and update tests, and documented blockers.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: upload the build, submit it for App Review, configure manual release, and publish a pre-order when eligible.",
+        "direct": "Direct: archive with Developer ID, submit with notarytool, inspect the notarization log, staple the ticket, verify with Gatekeeper, and stage the signed download plus update feed."
+      }
+    },
+    "STB-08": {
+      "action": "Share the trackable pre-order, waitlist, beta, or early-access link across owned channels.",
+      "rationale": "A channel-correct early action turns interest into measurable demand without promising an availability state that does not exist.",
+      "done_when": "Every owned channel uses the correct tracked link, the destination works on a clean Mac and in target regions, and the copy names the actual availability state.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: use the approved pre-order link when a pre-order is live.",
+        "direct": "Direct: use a waitlist, paid early access, or signed beta link; do not describe it as an App Store pre-order."
+      }
+    },
+    "STB-10": {
+      "action": "Assemble a Mac press kit with fact sheet, full-resolution screenshots, app icon, system requirements, privacy and pricing summary, contact details, links, and concise story angles.",
+      "done_when": "One public link exposes current assets and accurately describes the selected distribution and universal-purchase availability without requiring access permission."
+    },
+    "LWP-02": {
+      "action": "Enable release-channel, credential, crash, support, commerce, and delivery notifications needed to detect a blocked or unhealthy macOS launch.",
+      "rationale": "Fast awareness prevents review, certificate, notarization, download, payment, or update failures from sitting unnoticed.",
+      "done_when": "The correct owners receive and test relevant alerts, credential expiry is tracked, and release status can be checked without relying on one person's machine.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: enable App Store Connect notifications for review and status changes.",
+        "direct": "Direct: monitor signing certificate expiry, notarization failures, download availability, update-feed publication, payment webhooks, and license-service health."
+      }
+    },
+    "LWP-04": {
+      "action": "Finalize the macOS release candidate with a full week of margin, then test fresh install, upgrade, relaunch, and removal on clean supported Macs.",
+      "rationale": "A seven-day buffer absorbs App Review delays, signing or notarization corrections, and failures found only in clean install or upgrade tests.",
+      "done_when": "The exact release artifact passes the architecture and OS matrix, channel trust or review checks, permissions, core workflows, update path, and rollback plan.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: submit the final reviewed build and monitor App Review status.",
+        "direct": "Direct: notarize and staple the exact final artifact, verify signatures recursively, record its checksum, and test it after downloading over HTTPS."
+      }
+    },
+    "LWP-06": {
+      "action": "Freeze noncritical changes and identify the exact macOS artifacts, checksums, store version, download URL, and update-feed state that will ship.",
+      "done_when": "Only release blockers may change, each channel's immutable release candidate is identified, and owners know the launch and rollback runbook."
+    },
+    "DAY-01": {
+      "action": "Release the verified macOS app through every selected channel and perform a purchase, download, first-launch, and update smoke test as a customer.",
+      "rationale": "Release execution must use the exact reviewed or notarized artifacts and channel controls already verified before launch day.",
+      "done_when": "The intended version installs without security bypasses, launches on the supported matrix, completes its core workflow, and reports the expected version and channel.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: release the approved app or verify that the pre-order transitions to available in target storefronts.",
+        "direct": "Direct: publish the notarized artifact and checksum, activate the stable update feed, and verify Gatekeeper acceptance from a fresh browser download."
+      }
+    },
+    "DAY-02": {
+      "action": "Replace signup, waitlist, beta, or pre-order calls to action with the correct live macOS purchase or download actions.",
+      "done_when": "The production website points to each live channel, states compatibility and pricing accurately, and tracking survives redirects to the store or payment provider."
+    },
+    "FBF-01": {
+      "action": "Centralize public reviews, support mail, purchase issues, crashes, installation failures, update failures, beta feedback, and analytics in one log.",
+      "done_when": "Each report includes channel, macOS version, hardware architecture, app version, installation source, severity, owner, status, and evidence."
+    },
+    "FBF-03": {
+      "action": "Fix the highest-severity macOS defect and send a tested update through every affected release channel.",
+      "rationale": "Fast, focused repair protects early trust, but every corrected Mac artifact must still pass its channel's security and release controls.",
+      "done_when": "The defect is reproduced on the affected OS and architecture, fixed, regression-tested, passed through each channel's release controls, and verified through the real update path.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: request expedited review only for a genuine critical case and include reproducible steps for the public defect.",
+        "direct": "Direct: notarize and staple the corrected artifact, publish an authenticated update, and verify both in-app upgrade and fresh download."
+      }
+    },
+    "FBF-04": {
+      "action": "Reply respectfully and specifically to public reviews, directory comments, and customer support requests.",
+      "done_when": "Public reviews and support cases have a useful response or explicit priority reason, channel differences are handled accurately, and no reply exposes private information."
+    },
+    "FBF-05": {
+      "action": "Ship macOS version 1.0.1 only when a tested fix or useful improvement earns the update.",
+      "done_when": "The update passes the supported OS and architecture matrix, fresh-install and upgrade tests, each channel's release validation, staged rollout, and release monitoring."
+    },
+    "FBF-06": {
+      "action": "Ask for an App Store rating, public review, or testimonial at a natural moment of user success after the first update settles.",
+      "done_when": "The request matches the installation channel, avoids onboarding and interruption, does not gate functionality, and has version and engagement safeguards.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: use Apple's system review prompt rather than a custom rating prompt.",
+        "direct": "Direct: request a testimonial or review for an appropriate public directory; never imitate the App Store rating sheet."
+      }
+    },
+    "FBF-07": {
+      "action": "Record discovery baselines for the three core terms across the selected store, web, and directory surfaces.",
+      "done_when": "Rank or visibility, channel, storefront or region, competitors, conversion signal, and measurement date are stored for each term."
+    },
+    "LTL-02": {
+      "action": "Revisit each selected macOS product page using real discovery, conversion, review, refund, activation, update, and retention data.",
+      "rationale": "Channel-page decisions become better grounded after the app has real discovery, purchase, activation, and retention outcomes.",
+      "done_when": "Proposed copy, creative, pricing, compatibility, or onboarding changes cite channel-specific evidence and define the next comparison window."
+    },
+    "LTL-03": {
+      "action": "Decide whether paid acquisition is economically viable for each macOS distribution channel before spending.",
+      "done_when": "Channel-specific conversion, commission and payment costs, refunds, support cost, net lifetime value, and maximum acquisition cost are documented with test guardrails.",
+      "distribution_guidance": {
+        "app-store": "Mac App Store: evaluate Apple Ads only where inventory and targeting support the intended app and storefronts.",
+        "direct": "Direct: evaluate search, sponsorship, directory, newsletter, affiliate, or retargeting channels against completed purchases and activated licenses."
+      }
+    },
+    "LTL-05": {
+      "action": "Review macOS discovery, paid acquisition, crash-free use, refund, activation, and update-adoption results, then roll channel-specific lessons into the next release.",
+      "done_when": "Ineffective work is stopped, winning terms and channels are recorded, unresolved compatibility or update risks have owners, and the next experiment is defined."
+    }
+  }
+}

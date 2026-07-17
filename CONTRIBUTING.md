@@ -4,12 +4,14 @@ Contributions that make the launch plan more accurate, current, or useful are we
 
 ## Before opening a pull request
 
-1. Keep runtime guidance inside `skills/launch-indie-ios-app/`; keep repository documentation at the repository root.
+1. Keep runtime guidance inside `skills/launch-indie-app/`; keep repository documentation at the repository root.
 2. Do not copy prose or images from the source articles. Paraphrase facts, workflow, rationale, and lessons with attribution.
 3. Treat Apple Developer documentation as authoritative for platform requirements. Add a first-party URL and update the verification date when changing a date-sensitive rule.
 4. Preserve the 40 canonical source tasks unless the primary article changes. If it changes, update the task model, coverage audit, tests, and source verification together.
-5. Keep `SKILL.md` concise and route detailed material through one-level-deep files in `references/`.
-6. Run the complete test suite.
+5. Keep the iOS source model in `launch-tasks.json`. Put macOS-specific actions, rationale, done criteria, and channel guidance in `macos-task-overrides.json` without changing canonical IDs or dependencies.
+6. Update `macos-distribution.md`, Apple source links, and channel-isolation tests together when changing Mac App Store, Developer ID, notarization, packaging, commerce, or update guidance.
+7. Keep `SKILL.md` concise and route detailed material through one-level-deep files in `references/`.
+8. Run the complete test suite.
 
 ```bash
 python3 tests/test_skill.py

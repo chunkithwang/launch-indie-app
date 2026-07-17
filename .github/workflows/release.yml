@@ -24,18 +24,18 @@ jobs:
         run: |
           mkdir -p dist
           cd skills
-          zip -r "../dist/launch-indie-ios-app-${TAG}.zip" launch-indie-ios-app \
+          zip -r "../dist/launch-indie-app-${TAG}.zip" launch-indie-app \
             -x "*/__pycache__/*" "*.pyc" ".DS_Store"
           cd ..
-          sha256sum "dist/launch-indie-ios-app-${TAG}.zip" \
-            > "dist/launch-indie-ios-app-${TAG}.zip.sha256"
+          sha256sum "dist/launch-indie-app-${TAG}.zip" \
+            > "dist/launch-indie-app-${TAG}.zip.sha256"
       - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
           gh release create "${TAG}" \
-            "dist/launch-indie-ios-app-${TAG}.zip#Installable Skill archive" \
-            "dist/launch-indie-ios-app-${TAG}.zip.sha256#SHA-256 checksum" \
+            "dist/launch-indie-app-${TAG}.zip#Installable Skill archive" \
+            "dist/launch-indie-app-${TAG}.zip.sha256#SHA-256 checksum" \
             --generate-notes \
-            --title "launch-indie-ios-app ${TAG}"
+            --title "launch-indie-app ${TAG}"

@@ -51,6 +51,15 @@ The main article links to a same-site launch retrospective. `references/retrospe
 
 The article's Apple links are converted into current platform constraints in `references/apple-requirements.md`, including screenshot specifications, featuring nominations, TestFlight, pre-orders, pre-order analytics, release settings, App Review, expedited review, and rating prompts. Additional first-party Apple pages were used where the article's link did not contain enough implementation detail.
 
+## macOS adaptation
+
+The source article and canonical `launch-tasks.json` are iOS-specific. macOS support is an explicit operational adaptation rather than a claim of source coverage:
+
+- `references/macos-task-overrides.json` preserves all 40 task IDs, offsets, phase counts, and dependencies while replacing iOS-only actions and done criteria with Mac equivalents.
+- `references/macos-distribution.md` separates Mac App Store, direct Developer ID distribution, and dual-channel release gates.
+- `scripts/build_launch_plan.py --platform macos` applies the overrides and emits distribution guidance for `app-store`, `direct`, or `both`.
+- Apple Developer documentation is authoritative for Mac App Sandbox, App Review, screenshots, TestFlight for Mac, Developer ID, Hardened Runtime, notarization, and universal binaries.
+
 ## Deliberate exclusions
 
 - Kickstart product and Mac App Store links are promotional context, not launch methodology.
@@ -68,3 +77,4 @@ A complete conversion must pass all of these checks:
 4. Date-sensitive Apple facts have direct first-party links and a verification date.
 5. The same-site retrospective has a dedicated, section-complete reference.
 6. `SKILL.md` tells an agent when each reference must be read and how to execute canonical, compressed, launch-day, post-launch, and audit workflows.
+7. Every macOS override references a canonical task, uses a supported distribution mode, and can be generated in Markdown, CSV, and JSON without changing the 40-task dependency graph.
